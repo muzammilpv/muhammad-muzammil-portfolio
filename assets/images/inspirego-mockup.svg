@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050505"/>
+      <stop offset="50%" stop-color="#0d0c0a"/>
+      <stop offset="100%" stop-color="#050505"/>
+    </linearGradient>
+    <linearGradient id="amberGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#c98a2e" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#141310"/>
+      <stop offset="100%" stop-color="#090908"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="20" stdDeviation="25" flood-color="#000000" flood-opacity="0.95"/>
+    </filter>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="1200" height="800" fill="url(#bgGrad)"/>
+
+  <!-- Warm Amber Glow Accents -->
+  <circle cx="1000" cy="150" r="300" fill="#f59e0b" opacity="0.1" filter="blur(60px)"/>
+  <circle cx="200" cy="650" r="250" fill="#ffb84d" opacity="0.08" filter="blur(50px)"/>
+
+  <!-- Browser Window Container -->
+  <g filter="url(#shadow)">
+    <!-- Browser Frame -->
+    <rect x="100" y="80" width="1000" height="640" rx="12" fill="#0a0a0a" stroke="#262420" stroke-width="2"/>
+    <!-- Browser Top Bar -->
+    <rect x="100" y="80" width="1000" height="45" rx="12" fill="#12110e"/>
+    <rect x="100" y="113" width="1000" height="12" fill="#12110e"/>
+
+    <!-- Window Control Dots -->
+    <circle cx="130" cy="102" r="6" fill="#ff5f56"/>
+    <circle cx="150" cy="102" r="6" fill="#ffbd2e"/>
+    <circle cx="170" cy="102" r="6" fill="#27c93f"/>
+
+    <!-- URL Bar -->
+    <rect x="220" y="92" width="760" height="22" rx="11" fill="#050505" stroke="#211f1a" stroke-width="1"/>
+    <text x="600" y="107" fill="#a7a39a" font-family="'Space Grotesk', sans-serif" font-size="11" text-anchor="middle" letter-spacing="1">https://inspirego.travel</text>
+
+    <!-- Browser Content - InspireGo Web Layout -->
+    <g transform="translate(100, 125)">
+      <!-- Nav inside mock -->
+      <rect width="1000" height="60" fill="#070707"/>
+      <text x="50" y="38" fill="#f5f2ea" font-family="'Syne', sans-serif" font-weight="800" font-size="20" letter-spacing="2">INSPIRE<tspan fill="#f59e0b">GO</tspan></text>
+
+      <text x="450" y="36" fill="#f5f2ea" font-family="sans-serif" font-size="12" letter-spacing="1">DESTINATIONS</text>
+      <text x="580" y="36" fill="#a7a39a" font-family="sans-serif" font-size="12" letter-spacing="1">EXPERIENCES</text>
+      <text x="700" y="36" fill="#a7a39a" font-family="sans-serif" font-size="12" letter-spacing="1">ABOUT</text>
+      <rect x="830" y="18" width="120" height="30" rx="4" fill="#f59e0b"/>
+      <text x="890" y="37" fill="#050505" font-family="sans-serif" font-weight="700" font-size="11" text-anchor="middle" letter-spacing="1">EXPLORE</text>
+
+      <!-- Hero Banner inside mock -->
+      <rect y="60" width="1000" height="340" fill="url(#cardGrad)"/>
+
+      <!-- Abstract Destination Graphic -->
+      <rect x="520" y="80" width="430" height="300" rx="8" fill="#12110e" stroke="#2b2820" stroke-width="1"/>
+      <circle cx="735" cy="230" r="90" fill="#f59e0b" opacity="0.15"/>
+      <path d="M 540 350 L 640 220 L 710 290 L 800 170 L 930 350 Z" fill="#1d1b17" opacity="0.8"/>
+      <path d="M 620 350 L 730 200 L 820 280 L 930 350 Z" fill="#f59e0b" opacity="0.35"/>
+
+      <!-- Main Heading in Mock -->
+      <text x="60" y="150" fill="#f59e0b" font-family="sans-serif" font-weight="700" font-size="12" letter-spacing="3">PREMIUM TRAVEL EXPERIENCES</text>
+      <text x="60" y="200" fill="#f5f2ea" font-family="'Syne', sans-serif" font-weight="800" font-size="38" letter-spacing="1">DISCOVER THE</text>
+      <text x="60" y="245" fill="#f5f2ea" font-family="'Syne', sans-serif" font-weight="800" font-size="38" letter-spacing="1">EXTRAORDINARY.</text>
+      <text x="60" y="285" fill="#a7a39a" font-family="sans-serif" font-size="14">Immersive destinations curated for modern explorers.</text>
+
+      <!-- Search Bar Widget -->
+      <rect x="60" y="320" width="400" height="50" rx="6" fill="#050505" stroke="#f59e0b" stroke-width="1.5"/>
+      <text x="90" y="350" fill="#666259" font-family="sans-serif" font-size="13">Where would you like to go?</text>
+      <rect x="340" y="326" width="114" height="38" rx="4" fill="#f59e0b"/>
+      <text x="397" y="350" fill="#050505" font-family="sans-serif" font-weight="700" font-size="12" text-anchor="middle">SEARCH</text>
+
+      <!-- Bottom Featured Cards Grid inside mock -->
+      <rect x="60" y="420" width="270" height="150" rx="6" fill="#12110e"/>
+      <rect x="75" y="435" width="240" height="80" rx="4" fill="#1c1a15"/>
+      <text x="75" y="540" fill="#f5f2ea" font-family="sans-serif" font-weight="700" font-size="14">KYOTO, JAPAN</text>
+
+      <rect x="360" y="420" width="270" height="150" rx="6" fill="#12110e"/>
+      <rect x="375" y="435" width="240" height="80" rx="4" fill="#1c1a15"/>
+      <text x="375" y="540" fill="#f5f2ea" font-family="sans-serif" font-weight="700" font-size="14">AMALFI COAST</text>
+
+      <rect x="660" y="420" width="280" height="150" rx="6" fill="#12110e"/>
+      <rect x="675" y="435" width="250" height="80" rx="4" fill="#1c1a15"/>
+      <text x="675" y="540" fill="#f5f2ea" font-family="sans-serif" font-weight="700" font-size="14">REYKJAVIK</text>
+    </g>
+  </g>
+</svg>

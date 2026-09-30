@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%" height="100%">
+  <defs>
+    <linearGradient id="sushiBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050505"/>
+      <stop offset="50%" stop-color="#14110e"/>
+      <stop offset="100%" stop-color="#080808"/>
+    </linearGradient>
+    <radialGradient id="amberLight" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#050505" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#sushiBg)"/>
+  <circle cx="600" cy="337" r="350" fill="url(#amberLight)"/>
+
+  <!-- Slate Plate -->
+  <ellipse cx="600" cy="450" rx="420" ry="120" fill="#121110" stroke="#2a2720" stroke-width="2"/>
+
+  <!-- Sushi Rolls Art -->
+  <g transform="translate(600, 380)">
+    <!-- Roll 1 -->
+    <ellipse cx="-160" cy="0" rx="65" ry="35" fill="#1c1a16" stroke="#f59e0b" stroke-width="2"/>
+    <ellipse cx="-160" cy="-5" rx="50" ry="25" fill="#f5f2ea"/>
+    <ellipse cx="-160" cy="-5" rx="30" ry="15" fill="#e65100"/>
+    <circle cx="-160" cy="-5" r="8" fill="#4ea832"/>
+
+    <!-- Roll 2 -->
+    <ellipse cx="0" cy="-20" rx="75" ry="40" fill="#1c1a16" stroke="#ffb84d" stroke-width="2.5"/>
+    <ellipse cx="0" cy="-26" rx="58" ry="30" fill="#f5f2ea"/>
+    <ellipse cx="0" cy="-26" rx="35" ry="18" fill="#d84315"/>
+    <circle cx="-10" cy="-26" r="10" fill="#2e7d32"/>
+    <circle cx="10" cy="-26" r="8" fill="#f59e0b"/>
+
+    <!-- Roll 3 -->
+    <ellipse cx="160" cy="0" rx="65" ry="35" fill="#1c1a16" stroke="#f59e0b" stroke-width="2"/>
+    <ellipse cx="160" cy="-5" rx="50" ry="25" fill="#f5f2ea"/>
+    <ellipse cx="160" cy="-5" rx="30" ry="15" fill="#e65100"/>
+    <circle cx="160" cy="-5" r="8" fill="#4ea832"/>
+  </g>
+
+  <!-- Typography Overlay -->
+  <text x="600" y="160" fill="#f59e0b" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="20" letter-spacing="6" text-anchor="middle">FOOD & PRODUCT COMMERCIAL</text>
+  <text x="600" y="220" fill="#f5f2ea" font-family="'Syne', sans-serif" font-weight="900" font-size="52" letter-spacing="4" text-anchor="middle">MIMIO SUSHI</text>
+  <line x1="500" y1="250" x2="700" y2="250" stroke="#f59e0b" stroke-width="2"/>
+</svg>

@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050505"/>
+      <stop offset="50%" stop-color="#0f0d0a"/>
+      <stop offset="100%" stop-color="#050505"/>
+    </linearGradient>
+    <filter id="shadow2" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="20" stdDeviation="25" flood-color="#000000" flood-opacity="0.95"/>
+    </filter>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="1200" height="800" fill="url(#bgGrad2)"/>
+
+  <!-- Subtle Warm Amber Ambient Glow -->
+  <circle cx="250" cy="200" r="280" fill="#f59e0b" opacity="0.08" filter="blur(70px)"/>
+  <circle cx="950" cy="600" r="320" fill="#c98a2e" opacity="0.08" filter="blur(80px)"/>
+
+  <!-- Browser Window Container -->
+  <g filter="url(#shadow2)">
+    <rect x="80" y="70" width="1040" height="660" rx="12" fill="#0a0a0a" stroke="#26241e" stroke-width="2"/>
+    
+    <!-- Browser Top Bar -->
+    <rect x="80" y="70" width="1040" height="45" rx="12" fill="#12110e"/>
+    <rect x="80" y="103" width="1040" height="12" fill="#12110e"/>
+
+    <!-- Window Buttons -->
+    <circle cx="110" cy="92" r="6" fill="#ff5f56"/>
+    <circle cx="130" cy="92" r="6" fill="#ffbd2e"/>
+    <circle cx="150" cy="92" r="6" fill="#27c93f"/>
+
+    <!-- URL Bar -->
+    <rect x="200" y="82" width="800" height="22" rx="11" fill="#050505" stroke="#1f1d18" stroke-width="1"/>
+    <text x="600" y="97" fill="#a7a39a" font-family="'Space Grotesk', sans-serif" font-size="11" text-anchor="middle" letter-spacing="1">https://app.edexora.io/dashboard</text>
+
+    <!-- App Dashboard Layout -->
+    <g transform="translate(80, 115)">
+      <!-- Sidebar -->
+      <rect width="220" height="615" fill="#0d0c0a" stroke="#1c1a16" stroke-width="1"/>
+      <text x="30" y="45" fill="#f5f2ea" font-family="'Syne', sans-serif" font-weight="800" font-size="22" letter-spacing="2">EDEX<tspan fill="#f59e0b">ORA</tspan></text>
+      
+      <!-- Role Badges -->
+      <rect x="30" y="70" width="160" height="28" rx="14" fill="#1a1813"/>
+      <circle cx="44" cy="84" r="5" fill="#f59e0b"/>
+      <text x="56" y="88" fill="#f59e0b" font-family="sans-serif" font-weight="700" font-size="10" letter-spacing="1">STUDENT PORTAL</text>
+
+      <!-- Navigation Items -->
+      <rect x="20" y="125" width="180" height="36" rx="6" fill="#f59e0b" opacity="0.15"/>
+      <rect x="20" y="125" width="4" height="36" rx="2" fill="#f59e0b"/>
+      <text x="45" y="148" fill="#f5f2ea" font-family="sans-serif" font-weight="700" font-size="12">Dashboard</text>
+
+      <text x="45" y="195" fill="#a7a39a" font-family="sans-serif" font-size="12">My Classes</text>
+      <text x="45" y="235" fill="#a7a39a" font-family="sans-serif" font-size="12">Recorded Lessons</text>
+      <text x="45" y="275" fill="#a7a39a" font-family="sans-serif" font-size="12">Quizzes & Tests</text>
+      <text x="45" y="315" fill="#a7a39a" font-family="sans-serif" font-size="12">Progress Analytics</text>
+      
+      <!-- Admin / Teacher Selector -->
+      <line x1="20" y1="420" x2="200" y2="420" stroke="#1f1d18" stroke-width="1"/>
+      <text x="30" y="445" fill="#666259" font-family="sans-serif" font-weight="700" font-size="10" letter-spacing="1">SWITCH VIEW</text>
+      <rect x="20" y="460" width="180" height="30" rx="4" fill="#141310"/>
+      <text x="35" y="480" fill="#a7a39a" font-family="sans-serif" font-size="11">Teacher Portal ↗</text>
+      <rect x="20" y="500" width="180" height="30" rx="4" fill="#141310"/>
+      <text x="35" y="520" fill="#a7a39a" font-family="sans-serif" font-size="11">Admin Console ↗</text>
+
+      <!-- Main Dashboard Content -->
+      <g transform="translate(220, 0)">
+        <!-- Top Bar inside Content -->
+        <rect width="820" height="60" fill="#0b0a08" stroke="#1c1a16" stroke-width="1"/>
+        <text x="40" y="38" fill="#f5f2ea" font-family="'Syne', sans-serif" font-weight="700" font-size="18">Welcome back, Student</text>
+        <circle cx="750" cy="30" r="16" fill="#1c1a15"/>
+        <text x="750" y="35" fill="#f5f2ea" font-family="sans-serif" font-size="11" text-anchor="middle">MM</text>
+
+        <!-- Analytics Metric Cards -->
+        <rect x="40" y="90" width="230" height="110" rx="8" fill="#12110e" stroke="#26231c" stroke-width="1"/>
+        <text x="60" y="120" fill="#a7a39a" font-family="sans-serif" font-size="11" letter-spacing="1">ENROLLED COURSES</text>
+        <text x="60" y="160" fill="#f5f2ea" font-family="'Syne', sans-serif" font-weight="800" font-size="32">08</text>
+        <text x="120" y="160" fill="#f59e0b" font-family="sans-serif" font-size="11">+2 active today</text>
+
+        <rect x="295" y="90" width="230" height="110" rx="8" fill="#12110e" stroke="#26231c" stroke-width="1"/>
+        <text x="315" y="120" fill="#a7a39a" font-family="sans-serif" font-size="11" letter-spacing="1">COMPLETED QUIZZES</text>
+        <text x="315" y="160" fill="#f5f2ea" font-family="'Syne', sans-serif" font-weight="800" font-size="32">24</text>
+        <text x="375" y="160" fill="#27c93f" font-family="sans-serif" font-size="11">96% Score Avg</text>
+
+        <rect x="550" y="90" width="230" height="110" rx="8" fill="#12110e" stroke="#f59e0b" stroke-width="1"/>
+        <text x="570" y="120" fill="#f59e0b" font-family="sans-serif" font-weight="700" font-size="11" letter-spacing="1">REMAINING CLASSES</text>
+        <text x="570" y="160" fill="#f5f2ea" font-family="'Syne', sans-serif" font-weight="800" font-size="32">12</text>
+        <text x="630" y="160" fill="#a7a39a" font-family="sans-serif" font-size="11">Sessions Left</text>
+
+        <!-- Live & Recorded Classes Grid -->
+        <text x="40" y="235" fill="#f5f2ea" font-family="'Syne', sans-serif" font-weight="700" font-size="16">Active & Upcoming Sessions</text>
+
+        <rect x="40" y="255" width="485" height="170" rx="8" fill="#12110e" stroke="#26231c" stroke-width="1"/>
+        <rect x="55" y="270" width="130" height="140" rx="6" fill="#1a1813"/>
+        <circle cx="120" cy="340" r="20" fill="#f59e0b"/>
+        <polygon points="116,332 128,340 116,348" fill="#050505"/>
+        
+        <text x="200" y="295" fill="#f59e0b" font-family="sans-serif" font-weight="700" font-size="10" letter-spacing="1">LIVE SESSION NOW</text>
+        <text x="200" y="320" fill="#f5f2ea" font-family="'Syne', sans-serif" font-weight="700" font-size="16">AI Creative Workflows</text>
+        <text x="200" y="345" fill="#a7a39a" font-family="sans-serif" font-size="12">Generative AI Tools & Prompt Design</text>
+        <rect x="200" y="365" width="120" height="30" rx="4" fill="#f59e0b"/>
+        <text x="260" y="384" fill="#050505" font-family="sans-serif" font-weight="700" font-size="11" text-anchor="middle">JOIN LIVE ↗</text>
+
+        <rect x="545" y="255" width="235" height="170" rx="8" fill="#12110e" stroke="#26231c" stroke-width="1"/>
+        <text x="565" y="285" fill="#f5f2ea" font-family="'Syne', sans-serif" font-weight="700" font-size="14">Progress Overview</text>
+        <circle cx="662" cy="350" r="40" fill="none" stroke="#1f1d18" stroke-width="8"/>
+        <circle cx="662" cy="350" r="40" fill="none" stroke="#f59e0b" stroke-width="8" stroke-dasharray="251" stroke-dashoffset="65"/>
+        <text x="662" y="355" fill="#f5f2ea" font-family="sans-serif" font-weight="700" font-size="14" text-anchor="middle">74%</text>
+
+        <!-- Admin & Teacher Management Bar -->
+        <rect x="40" y="445" width="740" height="130" rx="8" fill="#0d0c0a" stroke="#26231c" stroke-width="1"/>
+        <text x="60" y="475" fill="#f5f2ea" font-family="'Syne', sans-serif" font-weight="700" font-size="14">Admin & Teacher Governance Tools</text>
+        <text x="60" y="495" fill="#a7a39a" font-family="sans-serif" font-size="12">Integrated Student Management, Class Scheduling, Financial Reporting & Platform Controls.</text>
+
+        <rect x="60" y="515" width="150" height="36" rx="4" fill="#181612" stroke="#2e2a21" stroke-width="1"/>
+        <text x="135" y="537" fill="#f5f2ea" font-family="sans-serif" font-size="11" text-anchor="middle">Student Admin ↗</text>
+
+        <rect x="225" y="515" width="150" height="36" rx="4" fill="#181612" stroke="#2e2a21" stroke-width="1"/>
+        <text x="300" y="537" fill="#f5f2ea" font-family="sans-serif" font-size="11" text-anchor="middle">Teacher Portal ↗</text>
+
+        <rect x="390" y="515" width="150" height="36" rx="4" fill="#181612" stroke="#2e2a21" stroke-width="1"/>
+        <text x="465" y="537" fill="#f5f2ea" font-family="sans-serif" font-size="11" text-anchor="middle">Finance & Reports ↗</text>
+      </g>
+    </g>
+  </g>
+</svg>
