@@ -1,5 +1,4 @@
 const { execSync } = require('child_process');
-const path = require('path');
 
 const gitBin = `"C:\\Users\\ASUS\\git-portable\\cmd\\git.exe"`;
 const cwd = __dirname;
@@ -18,8 +17,8 @@ function runGit(cmd) {
   }
 }
 
-console.log("Updating GitHub repository for Vercel deployment...");
+console.log("Pushing clean Vercel static configuration fix...");
 
 runGit("add -A");
-runGit('commit -m "Add vercel.json configuration and optimize repository size for Vercel static deployment"');
+runGit('commit -m "Fix vercel.json and package.json for clean Vercel static build"');
 runGit("push origin main");

@@ -1,20 +1,4 @@
 {
-  "version": 2,
-  "public": true,
   "cleanUrls": true,
-  "headers": [
-    {
-      "source": "/assets/videos/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Accept-Ranges", "value": "bytes" }
-      ]
-    },
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
-      ]
-    }
-  ]
+  "trailingSlash": false
 }
