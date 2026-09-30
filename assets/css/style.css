@@ -461,13 +461,7 @@ h1, h2, h3, h4, .font-display {
 }
 
 .hero-top-bar {
-  grid-column: 1 / -1;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--border-subtle);
-  padding-bottom: 1rem;
-  margin-bottom: 1.75rem;
+  display: none !important;
 }
 
 .hero-status-tag {
