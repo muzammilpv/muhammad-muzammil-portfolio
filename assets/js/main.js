@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initStickyHeader();
   initMobileMenu();
   renderCompactSelectedWorks();
+  renderGalleryWorks('all');
   initWorksGalleryModal();
   initFilterTabs();
   initVideoObservers();
@@ -122,9 +123,7 @@ function renderCompactSelectedWorks() {
   const container = document.getElementById('selected-works-grid');
   if (!container) return;
 
-  const featured = projectsData.slice(0, 4);
-  container.innerHTML = featured.map(p => createProjectCardHTML(p, true, true)).join('');
-
+  container.innerHTML = projectsData.map(p => createProjectCardHTML(p, true, true)).join('');
   attachProjectCardEvents(container);
 }
 
