@@ -14,21 +14,20 @@
   <meta property="og:type" content="website">
   <meta property="og:image" content="assets/images/muzammil-portrait.png">
 
-  <!-- Google Fonts: Refined Ultra-Clean Typography -->
+  <!-- Preconnect for Performance Optimization -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Playfair+Display:ital@1&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
   <!-- Font Awesome 6 Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="assets/css/style.css?v=4.0">
+  <link rel="stylesheet" href="assets/css/style.css?v=5.0">
 </head>
 <body>
-
-  <!-- Subtle Film Noise Overlay -->
-  <div class="grain-overlay"></div>
 
   <!-- Desktop Custom Cursor -->
   <div class="custom-cursor-dot"></div>
@@ -87,9 +86,8 @@
       <div class="hero-grid">
         
 
-
         <!-- Left Column -->
-        <div class="hero-content-left fade-up">
+        <div class="hero-content-left fade-up in-view">
           <span class="hero-greeting">Hello, I'm</span>
           <h1 class="hero-main-name">MUHAMMAD<br>MUZAMMIL</h1>
           <p class="hero-statement">"I turn ideas into AI-powered visuals, cinematic content and digital experiences."</p>
@@ -103,16 +101,16 @@
         </div>
 
         <!-- Center Column -->
-        <div class="hero-portrait-container fade-up">
+        <div class="hero-portrait-container fade-up in-view">
           <div class="portrait-wrapper">
-            <img src="assets/images/muzammil-portrait.png" alt="Muhammad Muzammil" class="portrait-img" loading="eager">
+            <img src="assets/images/muzammil-portrait.png" alt="Muhammad Muzammil" class="portrait-img" loading="eager" fetchpriority="high">
             <div class="portrait-overlay-glow"></div>
             <div class="portrait-frame-line"></div>
           </div>
         </div>
 
         <!-- Right Column -->
-        <div class="hero-info-box fade-up">
+        <div class="hero-info-box fade-up in-view">
           <div class="info-item">
             <span class="info-label"><i class="fa-solid fa-bullseye"></i> SPECIALIZED IN</span>
             <span class="info-value">AI CREATIVE • VIDEO & CONTENT • DIGITAL MARKETING</span>
