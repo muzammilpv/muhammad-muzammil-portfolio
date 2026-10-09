@@ -512,6 +512,7 @@ h1, h2, h3, h4, .font-display {
 }
 
 .hero-positioning {
+  display: none !important;
   font-family: var(--font-heading);
   font-size: clamp(0.9rem, 1.3vw, 1.15rem);
   font-weight: 600;
