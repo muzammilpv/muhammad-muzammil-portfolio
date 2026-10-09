@@ -257,45 +257,58 @@ function openProjectModal(project) {
   const isVideo = project.videoUrl && project.videoUrl.length > 0;
 
   const html = `
-    <button class="modal-close-btn" id="modal-close" aria-label="Close modal">&times;</button>
+    <div class="modal-top-nav">
+      <button class="modal-back-btn" id="modal-back-btn">
+        <i class="fa-solid fa-arrow-left"></i> BACK TO WORKS
+      </button>
+      <button class="modal-close-icon" id="modal-close" aria-label="Close modal">&times;</button>
+    </div>
+
     <div class="modal-media-wrapper">
       ${isVideo ? `
         <video controls autoplay loop playsinline class="modal-video" poster="${project.posterUrl}">
           <source src="${project.videoUrl}" type="video/mp4">
         </video>
       ` : `
-        <img src="${project.posterUrl}" alt="${project.title}">
+        <img src="${project.posterUrl}" alt="${project.title}" style="width:100%; max-height:65vh; object-fit:contain;">
       `}
     </div>
-    <div class="modal-header-block">
-      <span class="modal-category">${project.category} • ${project.year || '2026'}</span>
-      <h2 class="modal-title">${project.title}</h2>
-    </div>
-    <div class="modal-body-grid">
-      <div>
-        <h4 class="modal-section-title">About the Project</h4>
-        <p class="modal-text">${project.description}</p>
-        
-        ${project.features ? `
-          <div style="margin-top: 1.5rem;">
-            <h4 class="modal-section-title">Key System Features</h4>
-            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-              <div><strong style="color:var(--accent-amber)">STUDENT PORTAL:</strong> ${project.features.student.join(', ')}</div>
-              <div><strong style="color:var(--accent-amber)">TEACHER PORTAL:</strong> ${project.features.teacher.join(', ')}</div>
-              <div><strong style="color:var(--accent-amber)">ADMIN CONSOLE:</strong> ${project.features.admin.join(', ')}</div>
-            </div>
-          </div>
-        ` : ''}
-      </div>
-      <div>
-        <h4 class="modal-section-title">Creative Approach</h4>
-        <ul class="modal-spec-list">
-          ${(project.creativeApproach || []).map(item => `<li class="modal-spec-item">${item}</li>`).join('')}
-        </ul>
 
-        <h4 class="modal-section-title" style="margin-top: 1.5rem;">Tools & Workflow</h4>
-        <div class="project-tags-list">
-          ${(project.tools || []).map(t => `<span class="project-tag" style="border-color:var(--accent-amber)">${t}</span>`).join('')}
+    <div style="padding: 1.75rem 2rem;">
+      <div class="modal-header-block" style="margin-bottom: 1.5rem;">
+        <span class="modal-category" style="color:var(--accent-amber); font-weight:600; font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase;">${project.category} • ${project.year || '2026'}</span>
+        <h2 class="modal-title" style="font-size: clamp(1.5rem, 3vw, 2.2rem); margin: 0.4rem 0 0.75rem 0; color: var(--text-primary); font-weight: 700;">${project.title}</h2>
+      </div>
+
+      <div class="modal-body-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <div>
+          <h4 class="modal-section-title" style="color: var(--accent-amber); margin-bottom: 0.6rem; font-size: 0.9rem; letter-spacing: 0.08em; text-transform: uppercase;">About the Project</h4>
+          <p class="modal-text" style="color: var(--text-secondary); line-height: 1.65; font-size: 0.95rem;">${project.description}</p>
+          
+          ${project.features ? `
+            <div style="margin-top: 1.5rem;">
+              <h4 class="modal-section-title" style="color: var(--accent-amber); margin-bottom: 0.6rem; font-size: 0.9rem; letter-spacing: 0.08em; text-transform: uppercase;">Key Features</h4>
+              <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">
+                <div><strong style="color:var(--accent-amber)">STUDENT PORTAL:</strong> ${project.features.student.join(', ')}</div>
+                <div><strong style="color:var(--accent-amber)">TEACHER PORTAL:</strong> ${project.features.teacher.join(', ')}</div>
+                <div><strong style="color:var(--accent-amber)">ADMIN CONSOLE:</strong> ${project.features.admin.join(', ')}</div>
+              </div>
+            </div>
+          ` : ''}
+        </div>
+
+        <div>
+          ${project.creativeApproach && project.creativeApproach.length ? `
+            <h4 class="modal-section-title" style="color: var(--accent-amber); margin-bottom: 0.6rem; font-size: 0.9rem; letter-spacing: 0.08em; text-transform: uppercase;">Creative Approach</h4>
+            <ul style="list-style: none; padding: 0; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+              ${project.creativeApproach.map(item => `<li style="color: var(--text-secondary); font-size: 0.9rem; position: relative; padding-left: 1.25rem;"><span style="position: absolute; left: 0; color: var(--accent-amber);">•</span> ${item}</li>`).join('')}
+            </ul>
+          ` : ''}
+
+          <h4 class="modal-section-title" style="color: var(--accent-amber); margin-bottom: 0.6rem; font-size: 0.9rem; letter-spacing: 0.08em; text-transform: uppercase;">Tools & Tags</h4>
+          <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+            ${(project.tags || []).map(t => `<span style="border: 1px solid var(--border-amber); background: var(--bg-card); color: var(--text-primary); padding: 0.35rem 0.85rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">${t}</span>`).join('')}
+          </div>
         </div>
       </div>
     </div>
@@ -305,8 +318,11 @@ function openProjectModal(project) {
   backdrop.classList.add('is-open');
   document.body.style.overflow = 'hidden';
 
+  const backBtn = document.getElementById('modal-back-btn');
   const closeBtn = document.getElementById('modal-close');
-  closeBtn.addEventListener('click', closeModal);
+
+  if (backBtn) backBtn.addEventListener('click', closeModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
 
   backdrop.onclick = (e) => {
     if (e.target === backdrop) closeModal();
