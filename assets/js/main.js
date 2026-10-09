@@ -423,18 +423,72 @@ function initContactModal() {
   });
 
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const submitBtn = form.querySelector('button[type="submit"]');
-      submitBtn.innerText = 'MESSAGE SENT ✓';
-      submitBtn.style.backgroundColor = '#10b981';
-      setTimeout(() => {
-        backdrop.classList.remove('is-open');
-        document.body.style.overflow = '';
-        form.reset();
-        submitBtn.innerText = 'SEND MESSAGE →';
-        submitBtn.style.backgroundColor = '';
-      }, 1500);
+      const originalText = submitBtn.innerHTML;
+
+      const nameInput = form.querySelector('input[name="name"]');
+      const emailInput = form.querySelector('input[name="email"]');
+      const projectInput = form.querySelector('input[name="project_type"]');
+      const messageInput = form.querySelector('textarea[name="message"]');
+
+      const name = nameInput ? nameInput.value.trim() : '';
+      const email = emailInput ? emailInput.value.trim() : '';
+      const projectType = projectInput ? projectInput.value.trim() : 'General Inquiry';
+      const message = messageInput ? messageInput.value.trim() : '';
+
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> SENDING...';
+      submitBtn.disabled = true;
+
+      try {
+        const response = await fetch('https://formsubmit.co/ajax/muzammilmuthu546@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            _subject: `⚡ New Project Request: ${name} (${projectType})`,
+            _template: 'table',
+            _captcha: 'false',
+            "Client Name": name,
+            "Client Email": email,
+            "Project Type": projectType,
+            "Message / Brief": message
+          })
+        });
+
+        if (response.ok) {
+          submitBtn.innerText = 'MESSAGE SENT ✓';
+          submitBtn.style.backgroundColor = '#10b981';
+          submitBtn.style.borderColor = '#10b981';
+
+          setTimeout(() => {
+            backdrop.classList.remove('is-open');
+            document.body.style.overflow = '';
+            form.reset();
+            submitBtn.innerHTML = originalText;
+            submitBtn.style.backgroundColor = '';
+            submitBtn.style.borderColor = '';
+            submitBtn.disabled = false;
+          }, 2000);
+        } else {
+          throw new Error('FormSubmit response not ok');
+        }
+      } catch (err) {
+        const mailtoUrl = `mailto:muzammilmuthu546@gmail.com?subject=${encodeURIComponent(`Project Request from ${name}`)}&body=${encodeURIComponent(`Client Name: ${name}\nClient Email: ${email}\nProject Type: ${projectType}\n\nMessage:\n${message}`)}`;
+        window.location.href = mailtoUrl;
+
+        submitBtn.innerText = 'OPENING MAIL APP...';
+        setTimeout(() => {
+          backdrop.classList.remove('is-open');
+          document.body.style.overflow = '';
+          form.reset();
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+        }, 2000);
+      }
     });
   }
 }
