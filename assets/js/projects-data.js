@@ -190,32 +190,8 @@ const projectsData = [
     ]
   },
   {
-    "id": "inspirego",
-    "number": "09",
-    "title": "INSPIREGO",
-    "category": "TRAVEL DIGITAL EXPERIENCE",
-    "filterCategory": "web-digital",
-    "isFeatured": false,
-    "gridSize": "medium",
-    "isWebProject": true,
-    "description": "A modern travel agency website concept designed around immersive destination visuals.",
-    "tags": [
-      "WEB DESIGN",
-      "UI/UX",
-      "TRAVEL"
-    ],
-    "videoUrl": null,
-    "posterUrl": "assets/images/inspirego-mockup.svg",
-    "year": "2026",
-    "tools": [
-      "Vibe Coding",
-      "Figma",
-      "Web Development"
-    ]
-  },
-  {
     "id": "edexora",
-    "number": "10",
+    "number": "09",
     "title": "EDEXORA — ONLINE ACADEMY",
     "category": "ONLINE EDUCATION & TUITION PLATFORM",
     "filterCategory": "web-digital",
@@ -232,7 +208,7 @@ const projectsData = [
       "UI/UX"
     ],
     "videoUrl": null,
-    "posterUrl": "assets/images/edexora-mockup.svg",
+    "posterUrl": "assets/images/edexora-thumb.jpg",
     "year": "2026",
     "tools": [
       "Web Development",

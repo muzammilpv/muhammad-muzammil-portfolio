@@ -251,36 +251,36 @@ async function main() {
   // Append Web Projects
   fullProjectsRegistry.push(
     {
-      id: "inspirego",
-      number: "08",
-      title: "INSPIREGO",
-      category: "TRAVEL DIGITAL EXPERIENCE",
-      filterCategory: "web-digital",
-      isFeatured: false,
-      gridSize: "medium",
-      isWebProject: true,
-      description: "A modern travel agency website concept designed around immersive destination visuals.",
-      tags: ["WEB DESIGN", "UI/UX", "TRAVEL"],
-      videoUrl: null,
-      posterUrl: "assets/images/inspirego-mockup.svg",
-      year: "2026",
-      tools: ["Vibe Coding", "Figma", "Web Development"]
-    },
-    {
       id: "edexora",
-      number: "09",
-      title: "EDEXORA",
-      category: "ONLINE EDUCATION PLATFORM",
+      number: String(fullProjectsRegistry.length + 1).padStart(2, '0'),
+      title: "EDEXORA — ONLINE ACADEMY",
+      category: "ONLINE EDUCATION & TUITION PLATFORM",
       filterCategory: "web-digital",
-      isFeatured: false,
+      isFeatured: true,
       gridSize: "medium",
       isWebProject: true,
-      description: "An online education platform concept combining learning management, classes, and administrative tools.",
-      tags: ["WEB APP", "EDTECH", "UI/UX"],
+      liveUrl: "https://edexora-online-academy.vercel.app",
+      description: "A modern online learning academy website built for personalised one-to-one tuition, school curriculum (CBSE, Kerala State, ICSE), online Madrasa classes, and language education for Kerala & Gulf students.",
+      tags: ["LIVE WEBSITE", "EDTECH", "ONE-TO-ONE TUITION", "WEB DEVELOPMENT", "UI/UX"],
       videoUrl: null,
-      posterUrl: "assets/images/edexora-mockup.svg",
+      posterUrl: "assets/images/edexora-thumb.jpg",
       year: "2026",
-      tools: ["Vibe Coding", "UI/UX", "AI Development"]
+      tools: ["Web Development", "UI/UX Design", "Vibe Coding", "Vercel Deployment"],
+      features: {
+        student: [
+          "Personalised 1-on-1 Tuition",
+          "Online Madrasa & Quran Learning",
+          "Interactive Lesson Portal"
+        ],
+        teacher: [
+          "Batch Scheduling & Progress Tracking",
+          "Parent Communication & Assessments"
+        ],
+        admin: [
+          "Multi-Curriculum Management (CBSE / State / ICSE)",
+          "Student Enrollment & Support"
+        ]
+      }
     }
   );
 
