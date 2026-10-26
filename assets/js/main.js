@@ -165,7 +165,7 @@ function createProjectCardHTML(p, isCompact = false, forceVisible = true) {
   const isVideo = p.videoUrl && p.videoUrl.length > 0;
   
   return `
-    <article class="project-card size-${isCompact ? 'medium' : p.gridSize} ${forceVisible ? 'in-view' : ''}" data-project-id="${p.id}">
+    <article class="project-card size-${isCompact ? 'medium' : p.gridSize} ${forceVisible ? 'in-view' : ''}" data-project-id="${p.id}" ${p.liveUrl ? `data-live-url="${p.liveUrl}"` : ''}>
       <div class="project-media-wrapper">
         ${isVideo ? `
           <video class="project-video" muted loop playsinline preload="none" poster="${p.posterUrl}" data-src="${p.videoUrl}">
@@ -190,8 +190,8 @@ function createProjectCardHTML(p, isCompact = false, forceVisible = true) {
         <p class="project-description">${p.description}</p>
         ${p.liveUrl ? `
           <div style="margin: 0.6rem 0;">
-            <a href="${p.liveUrl}" target="_blank" rel="noopener noreferrer" class="card-direct-link" style="color: var(--accent-amber); font-size: 0.8rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.28rem 0.65rem; border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 4px; background: rgba(245, 158, 11, 0.08);">
-              <i class="fa-solid fa-globe"></i> ${p.liveUrl.replace('https://', '')} <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.7rem;"></i>
+            <a href="${p.liveUrl}" target="_blank" rel="noopener noreferrer" class="card-direct-link" style="color: var(--accent-amber); font-size: 0.85rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.35rem 0.8rem; border: 1px solid rgba(245, 158, 11, 0.5); border-radius: 6px; background: rgba(245, 158, 11, 0.12);">
+              <i class="fa-solid fa-globe"></i> ${p.liveUrl.replace('https://', '')} <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.72rem;"></i>
             </a>
           </div>
         ` : ''}
@@ -204,33 +204,65 @@ function createProjectCardHTML(p, isCompact = false, forceVisible = true) {
 }
 
 function attachProjectCardEvents(container) {
+  const isTouchDevice = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
+
   container.querySelectorAll('.project-card').forEach(card => {
     const video = card.querySelector('video.project-video');
+    const liveUrl = card.getAttribute('data-live-url');
 
-    card.addEventListener('mouseenter', () => {
-      if (video) {
+    // Only attach hover preview playback on desktop mouse devices (never on mobile touch)
+    if (!isTouchDevice && video) {
+      card.addEventListener('mouseenter', () => {
         if (!video.src && video.dataset.src) {
           video.src = video.dataset.src;
         }
         video.play().catch(() => {});
-      }
-    });
+      });
 
-    card.addEventListener('mouseleave', () => {
-      if (video) {
+      card.addEventListener('mouseleave', () => {
         video.pause();
-      }
-    });
+      });
+    }
 
+    // Direct click handler on the entire card
     card.addEventListener('click', (e) => {
-      if (e.target.closest('.card-direct-link')) {
-        return; // Open external live link without opening modal
+      // Pause all background/preview videos immediately
+      document.querySelectorAll('video').forEach(v => {
+        try { v.pause(); } catch (err) {}
+      });
+
+      // If this card is a live website (like Edexora), directly open the website in a new tab
+      if (liveUrl) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.open(liveUrl, '_blank', 'noopener,noreferrer');
+        return;
       }
+
+      if (e.target.closest('.card-direct-link')) {
+        return;
+      }
+
       const id = card.getAttribute('data-project-id');
       const project = projectsData.find(p => p.id === id);
       if (project) {
         openProjectModal(project);
       }
+    });
+
+    // Also explicit click handler on .card-direct-link to guarantee opening website
+    card.querySelectorAll('.card-direct-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.querySelectorAll('video').forEach(v => {
+          try { v.pause(); } catch (err) {}
+        });
+        const targetUrl = link.getAttribute('href') || liveUrl;
+        if (targetUrl) {
+          e.preventDefault();
+          window.open(targetUrl, '_blank', 'noopener,noreferrer');
+        }
+      });
     });
   });
 }
@@ -318,6 +350,12 @@ function stopAndDestroyVideo(v) {
    PROJECT DETAIL MODAL (CASE STUDY)
    ========================================================================== */
 function openProjectModal(project) {
+  if (project.liveUrl && (!project.videoUrl || project.videoUrl.length === 0)) {
+    // Pure website project: directly open live website in a new tab without modal or video
+    window.open(project.liveUrl, '_blank', 'noopener,noreferrer');
+    return;
+  }
+
   const backdrop = document.getElementById('project-modal');
   const container = backdrop.querySelector('.modal-content-container');
 
