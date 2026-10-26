@@ -279,8 +279,9 @@ function openProjectModal(project) {
 
     <div class="modal-media-wrapper">
       ${isVideo ? `
-        <video controls autoplay loop playsinline class="modal-video" poster="${project.posterUrl}">
+        <video controls autoplay loop playsinline webkit-playsinline class="modal-video" poster="${project.posterUrl}" src="${project.videoUrl}">
           <source src="${project.videoUrl}" type="video/mp4">
+          Your browser does not support the video tag.
         </video>
       ` : `
         <img src="${project.posterUrl}" alt="${project.title}" style="width:100%; max-height:65vh; object-fit:contain;">
@@ -331,6 +332,19 @@ function openProjectModal(project) {
   backdrop.classList.add('is-open');
   document.body.style.overflow = 'hidden';
 
+  const modalVideo = container.querySelector('video.modal-video');
+  if (modalVideo) {
+    modalVideo.load();
+    const playPromise = modalVideo.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Autoplay policy fallback: mute and play
+        modalVideo.muted = true;
+        modalVideo.play().catch(() => {});
+      });
+    }
+  }
+
   const backBtn = document.getElementById('modal-back-btn');
   const closeBtn = document.getElementById('modal-close');
 
@@ -351,7 +365,11 @@ function closeModal() {
   backdrop.classList.remove('is-open');
   document.body.style.overflow = '';
   const video = backdrop.querySelector('video');
-  if (video) video.pause();
+  if (video) {
+    video.pause();
+    video.removeAttribute('src');
+    video.load();
+  }
 }
 
 /* ==========================================================================

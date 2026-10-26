@@ -64,7 +64,7 @@ const projectsData = [
       "BRAND AD",
       "CINEMATIC VISUALS"
     ],
-    "videoUrl": "assets/videos/abba-fuego.mov",
+    "videoUrl": "assets/videos/abba-fuego.mp4",
     "posterUrl": "assets/images/abba-fuego-thumb.jpg",
     "year": "2026",
     "tools": [
@@ -121,8 +121,31 @@ const projectsData = [
     ]
   },
   {
-    "id": "sup-itmgt",
+    "id": "agasthya-choornam",
     "number": "06",
+    "title": "AGASTHYA CHOORNAM",
+    "category": "HERBAL PRODUCT & AYURVEDIC COMMERCIAL",
+    "filterCategory": "product-ads",
+    "isFeatured": true,
+    "gridSize": "medium",
+    "description": "A cinematic ayurvedic product commercial highlighting herbal ingredients, organic vitality, and traditional wellness.",
+    "tags": [
+      "HERBAL PRODUCT",
+      "AI VIDEO",
+      "PRODUCT COMMERCIAL"
+    ],
+    "videoUrl": "assets/videos/agasthya-choornam.mp4",
+    "posterUrl": "assets/images/agasthya-choornam-thumb.jpg",
+    "year": "2026",
+    "tools": [
+      "Generative AI Video",
+      "CapCut Pro",
+      "Prompt Engineering"
+    ]
+  },
+  {
+    "id": "sup-itmgt",
+    "number": "07",
     "title": "SUP IT MANAGEMENT",
     "category": "CORPORATE & TECH COMMERCIAL",
     "filterCategory": "product-ads",
@@ -145,30 +168,30 @@ const projectsData = [
   },
   {
     "id": "aiora-media",
-    "number": "07",
-    "title": "AIORA MEDIA",
-    "category": "DIGITAL MEDIA & AGENCY AD",
+    "number": "08",
+    "title": "AIORA MEDIA — 3D ANIMATION",
+    "category": "AI CHARACTER ANIMATION & CREATIVE REEL",
     "filterCategory": "product-ads",
     "isFeatured": false,
     "gridSize": "medium",
-    "description": "A sleek digital agency promo video designed for Aiora Media, highlighting modern creative strategy.",
+    "description": "A creative AI character animation reel featuring stylized 3D animation, expressive character movements, and local Kerala storytelling.",
     "tags": [
-      "AGENCY PROMO",
-      "AI VIDEO",
-      "DIGITAL MARKETING"
+      "AI ANIMATION",
+      "CHARACTER DESIGN",
+      "CREATIVE REEL"
     ],
     "videoUrl": "assets/videos/aiora-media.mp4",
     "posterUrl": "assets/images/aiora-media-thumb.jpg",
     "year": "2026",
     "tools": [
       "Generative AI Video",
-      "CapCut Pro",
+      "3D Animation",
       "Prompt Engineering"
     ]
   },
   {
     "id": "inspirego",
-    "number": "08",
+    "number": "09",
     "title": "INSPIREGO",
     "category": "TRAVEL DIGITAL EXPERIENCE",
     "filterCategory": "web-digital",
@@ -192,7 +215,7 @@ const projectsData = [
   },
   {
     "id": "edexora",
-    "number": "09",
+    "number": "10",
     "title": "EDEXORA",
     "category": "ONLINE EDUCATION PLATFORM",
     "filterCategory": "web-digital",
