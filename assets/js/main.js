@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollAnimations();
   initContactModal();
   initCustomCursor();
+  initInstagramDeepLinks();
   
   // Ensure direct contact cards and social links handle navigation cleanly without interference
   document.querySelectorAll('a.contact-info-card').forEach(link => {
@@ -625,4 +626,41 @@ function initContactModal() {
       }
     });
   }
+}
+
+/* ==========================================================================
+   INSTAGRAM DEEP LINKING (DIRECT PROFILE LAUNCHER)
+   Bypasses Instagram background video/reel cache on Android & iOS by using
+   explicit user profile schemes, landing users strictly on the @ai_muzammil_
+   profile view.
+   ========================================================================== */
+function initInstagramDeepLinks() {
+  const username = 'ai_muzammil_';
+  const webUrl = `https://www.instagram.com/${username}/`;
+  const igLinks = document.querySelectorAll('a[href*="instagram.com/ai_muzammil_"], .ig-profile-link');
+
+  igLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera || '';
+
+      if (/android/i.test(userAgent)) {
+        e.preventDefault();
+        // Android Intent specifically routes to the user profile (_u/username), resetting any active video/reel
+        const intentUrl = `intent://instagram.com/_u/${username}/#Intent;package=com.instagram.android;scheme=https;end;`;
+        window.location.href = intentUrl;
+        setTimeout(() => {
+          window.location.href = webUrl;
+        }, 1200);
+      } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        e.preventDefault();
+        // iOS custom URL scheme routes directly to the user profile
+        window.location.href = `instagram://user?username=${username}`;
+        setTimeout(() => {
+          window.location.href = webUrl;
+        }, 1200);
+      }
+      // On desktop, default behavior follows standard href in a new tab
+    });
+  });
 }
