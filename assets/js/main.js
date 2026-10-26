@@ -12,8 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initVideoObservers();
   initScrollAnimations();
   initContactModal();
-  initCustomCursor();
-  initInstagramDeepLinks();
   
   // Ensure direct contact cards and social links handle navigation cleanly without interference
   document.querySelectorAll('a.contact-info-card').forEach(link => {
@@ -29,53 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => renderGalleryWorks('all'), 1500);
   }
 });
-
-/* ==========================================================================
-   CUSTOM CURSOR SYSTEM (OPTIMIZED FOR ZERO LAG)
-   ========================================================================== */
-function initCustomCursor() {
-  const dot = document.querySelector('.custom-cursor-dot');
-  const ring = document.querySelector('.custom-cursor-ring');
-
-  if (!dot || !ring) return;
-
-  // Disable custom cursor on touch devices / mobile phones to prevent lag
-  if (window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window) {
-    dot.style.display = 'none';
-    ring.style.display = 'none';
-    return;
-  }
-
-  let mouseX = 0, mouseY = 0;
-  let ringX = 0, ringY = 0;
-
-  window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-  }, { passive: true });
-
-  function animateRing() {
-    ringX += (mouseX - ringX) * 0.15;
-    ringY += (mouseY - ringY) * 0.15;
-    ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
-    requestAnimationFrame(animateRing);
-  }
-  animateRing();
-
-  const hoverSelectors = 'a, button, .project-card, .service-card, .filter-tab-btn, .skill-pill, .contact-info-card, .trigger-works-gallery';
-  document.addEventListener('mouseover', (e) => {
-    if (e.target.closest(hoverSelectors)) {
-      document.body.classList.add('cursor-hover');
-    }
-  }, { passive: true });
-
-  document.addEventListener('mouseout', (e) => {
-    if (e.target.closest(hoverSelectors)) {
-      document.body.classList.remove('cursor-hover');
-    }
-  }, { passive: true });
-}
 
 /* ==========================================================================
    STICKY HEADER & NAV HIGHLIGHT
@@ -164,8 +115,39 @@ function renderGalleryWorks(category = 'all') {
 function createProjectCardHTML(p, isCompact = false, forceVisible = true) {
   const isVideo = p.videoUrl && p.videoUrl.length > 0;
   
+  if (p.id === 'edexora' || p.isWebProject || p.liveUrl) {
+    const liveTarget = p.liveUrl || 'https://edexora-online-academy.vercel.app';
+    const displayUrl = liveTarget.replace('https://', '');
+    return `
+      <a href="${liveTarget}" target="_blank" rel="noopener noreferrer" class="project-card web-project-card size-${isCompact ? 'medium' : p.gridSize} ${forceVisible ? 'in-view' : ''}" data-project-id="${p.id}" data-live-url="${liveTarget}">
+        <div class="project-media-wrapper">
+          <img src="${p.posterUrl}" alt="${p.title}" class="project-img" loading="lazy">
+          <div class="project-media-overlay">
+            <span class="project-number">${p.number}</span>
+            <span class="project-hover-badge" style="display:inline-flex; align-items:center; gap:0.4rem;">
+              VISIT WEBSITE <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.75em;"></i>
+            </span>
+          </div>
+        </div>
+        <div class="project-info">
+          <span class="project-category">${p.category}</span>
+          <h3 class="project-title">${p.title}</h3>
+          <p class="project-description">${p.description}</p>
+          <div style="margin: 0.6rem 0;">
+            <span class="card-direct-link" style="color: var(--accent-amber); font-size: 0.85rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.35rem 0.8rem; border: 1px solid rgba(245, 158, 11, 0.5); border-radius: 6px; background: rgba(245, 158, 11, 0.12);">
+              <i class="fa-solid fa-globe"></i> ${displayUrl} <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.72rem;"></i>
+            </span>
+          </div>
+          <div class="project-tags-list">
+            ${p.tags.map(t => `<span class="project-tag">${t}</span>`).join('')}
+          </div>
+        </div>
+      </a>
+    `;
+  }
+
   return `
-    <article class="project-card size-${isCompact ? 'medium' : p.gridSize} ${forceVisible ? 'in-view' : ''}" data-project-id="${p.id}" ${p.liveUrl ? `data-live-url="${p.liveUrl}"` : ''}>
+    <article class="project-card size-${isCompact ? 'medium' : p.gridSize} ${forceVisible ? 'in-view' : ''}" data-project-id="${p.id}">
       <div class="project-media-wrapper">
         ${isVideo ? `
           <video class="project-video" muted loop playsinline preload="none" poster="${p.posterUrl}" data-src="${p.videoUrl}">
@@ -175,26 +157,13 @@ function createProjectCardHTML(p, isCompact = false, forceVisible = true) {
         `}
         <div class="project-media-overlay">
           <span class="project-number">${p.number}</span>
-          ${p.liveUrl ? `
-            <a href="${p.liveUrl}" target="_blank" rel="noopener noreferrer" class="project-hover-badge card-direct-link" style="text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem;">
-              VISIT WEBSITE <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.75em;"></i>
-            </a>
-          ` : `
-            <span class="project-hover-badge">VIEW PROJECT ↗</span>
-          `}
+          <span class="project-hover-badge">VIEW PROJECT ↗</span>
         </div>
       </div>
       <div class="project-info">
         <span class="project-category">${p.category}</span>
         <h3 class="project-title">${p.title}</h3>
         <p class="project-description">${p.description}</p>
-        ${p.liveUrl ? `
-          <div style="margin: 0.6rem 0;">
-            <a href="${p.liveUrl}" target="_blank" rel="noopener noreferrer" class="card-direct-link" style="color: var(--accent-amber); font-size: 0.85rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.35rem 0.8rem; border: 1px solid rgba(245, 158, 11, 0.5); border-radius: 6px; background: rgba(245, 158, 11, 0.12);">
-              <i class="fa-solid fa-globe"></i> ${p.liveUrl.replace('https://', '')} <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.72rem;"></i>
-            </a>
-          </div>
-        ` : ''}
         <div class="project-tags-list">
           ${p.tags.map(t => `<span class="project-tag">${t}</span>`).join('')}
         </div>
@@ -207,8 +176,18 @@ function attachProjectCardEvents(container) {
   const isTouchDevice = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
 
   container.querySelectorAll('.project-card').forEach(card => {
+    // If it's a web project card (like Edexora), let native <a> tag handle opening external link cleanly
+    if (card.tagName === 'A' || card.classList.contains('web-project-card') || card.getAttribute('data-project-id') === 'edexora') {
+      card.addEventListener('click', () => {
+        // Pause all preview videos on the page when opening live site
+        document.querySelectorAll('video').forEach(v => {
+          try { v.pause(); } catch (err) {}
+        });
+      });
+      return;
+    }
+
     const video = card.querySelector('video.project-video');
-    const liveUrl = card.getAttribute('data-live-url');
 
     // Only attach hover preview playback on desktop mouse devices (never on mobile touch)
     if (!isTouchDevice && video) {
@@ -224,45 +203,18 @@ function attachProjectCardEvents(container) {
       });
     }
 
-    // Direct click handler on the entire card
-    card.addEventListener('click', (e) => {
+    // Direct click handler on the entire video card
+    card.addEventListener('click', () => {
       // Pause all background/preview videos immediately
       document.querySelectorAll('video').forEach(v => {
         try { v.pause(); } catch (err) {}
       });
 
-      // If this card is a live website (like Edexora), directly open the website in a new tab
-      if (liveUrl) {
-        e.preventDefault();
-        e.stopPropagation();
-        window.open(liveUrl, '_blank', 'noopener,noreferrer');
-        return;
-      }
-
-      if (e.target.closest('.card-direct-link')) {
-        return;
-      }
-
       const id = card.getAttribute('data-project-id');
       const project = projectsData.find(p => p.id === id);
-      if (project) {
+      if (project && project.id !== 'edexora' && !project.liveUrl) {
         openProjectModal(project);
       }
-    });
-
-    // Also explicit click handler on .card-direct-link to guarantee opening website
-    card.querySelectorAll('.card-direct-link').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.stopPropagation();
-        document.querySelectorAll('video').forEach(v => {
-          try { v.pause(); } catch (err) {}
-        });
-        const targetUrl = link.getAttribute('href') || liveUrl;
-        if (targetUrl) {
-          e.preventDefault();
-          window.open(targetUrl, '_blank', 'noopener,noreferrer');
-        }
-      });
     });
   });
 }
@@ -350,9 +302,10 @@ function stopAndDestroyVideo(v) {
    PROJECT DETAIL MODAL (CASE STUDY)
    ========================================================================== */
 function openProjectModal(project) {
-  if (project.liveUrl && (!project.videoUrl || project.videoUrl.length === 0)) {
-    // Pure website project: directly open live website in a new tab without modal or video
-    window.open(project.liveUrl, '_blank', 'noopener,noreferrer');
+  if (!project || project.id === 'edexora' || project.liveUrl) {
+    if (project && project.liveUrl) {
+      window.open(project.liveUrl, '_blank', 'noopener,noreferrer');
+    }
     return;
   }
 
@@ -664,41 +617,4 @@ function initContactModal() {
       }
     });
   }
-}
-
-/* ==========================================================================
-   INSTAGRAM DEEP LINKING (DIRECT PROFILE LAUNCHER)
-   Bypasses Instagram background video/reel cache on Android & iOS by using
-   explicit user profile schemes, landing users strictly on the @ai_muzammil_
-   profile view.
-   ========================================================================== */
-function initInstagramDeepLinks() {
-  const username = 'ai_muzammil_';
-  const webUrl = `https://www.instagram.com/${username}/`;
-  const igLinks = document.querySelectorAll('a[href*="instagram.com/ai_muzammil_"], .ig-profile-link');
-
-  igLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const userAgent = navigator.userAgent || navigator.vendor || window.opera || '';
-
-      if (/android/i.test(userAgent)) {
-        e.preventDefault();
-        // Android Intent specifically routes to the user profile (_u/username), resetting any active video/reel
-        const intentUrl = `intent://instagram.com/_u/${username}/#Intent;package=com.instagram.android;scheme=https;end;`;
-        window.location.href = intentUrl;
-        setTimeout(() => {
-          window.location.href = webUrl;
-        }, 1200);
-      } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-        e.preventDefault();
-        // iOS custom URL scheme routes directly to the user profile
-        window.location.href = `instagram://user?username=${username}`;
-        setTimeout(() => {
-          window.location.href = webUrl;
-        }, 1200);
-      }
-      // On desktop, default behavior follows standard href in a new tab
-    });
-  });
 }
