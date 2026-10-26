@@ -216,25 +216,44 @@ const projectsData = [
   {
     "id": "edexora",
     "number": "10",
-    "title": "EDEXORA",
-    "category": "ONLINE EDUCATION PLATFORM",
+    "title": "EDEXORA — ONLINE ACADEMY",
+    "category": "ONLINE EDUCATION & TUITION PLATFORM",
     "filterCategory": "web-digital",
-    "isFeatured": false,
+    "isFeatured": true,
     "gridSize": "medium",
     "isWebProject": true,
-    "description": "An online education platform concept combining learning management, classes, and administrative tools.",
+    "liveUrl": "https://edexora-online-academy.vercel.app",
+    "description": "A modern online learning academy website built for personalised one-to-one tuition, school curriculum (CBSE, Kerala State, ICSE), online Madrasa classes, and language education for Kerala & Gulf students.",
     "tags": [
-      "WEB APP",
+      "LIVE WEBSITE",
       "EDTECH",
+      "ONE-TO-ONE TUITION",
+      "WEB DEVELOPMENT",
       "UI/UX"
     ],
     "videoUrl": null,
     "posterUrl": "assets/images/edexora-mockup.svg",
     "year": "2026",
     "tools": [
+      "Web Development",
+      "UI/UX Design",
       "Vibe Coding",
-      "UI/UX",
-      "AI Development"
-    ]
+      "Vercel Deployment"
+    ],
+    "features": {
+      "student": [
+        "Personalised 1-on-1 Tuition",
+        "Online Madrasa & Quran Learning",
+        "Interactive Lesson Portal"
+      ],
+      "teacher": [
+        "Batch Scheduling & Progress Tracking",
+        "Parent Communication & Assessments"
+      ],
+      "admin": [
+        "Multi-Curriculum Management (CBSE / State / ICSE)",
+        "Student Enrollment & Support"
+      ]
+    }
   }
 ];

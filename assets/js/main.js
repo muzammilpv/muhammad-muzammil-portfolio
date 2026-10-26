@@ -167,13 +167,26 @@ function createProjectCardHTML(p, isCompact = false, forceVisible = true) {
         `}
         <div class="project-media-overlay">
           <span class="project-number">${p.number}</span>
-          <span class="project-hover-badge">VIEW PROJECT ↗</span>
+          ${p.liveUrl ? `
+            <a href="${p.liveUrl}" target="_blank" rel="noopener noreferrer" class="project-hover-badge card-direct-link" style="text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem;">
+              VISIT WEBSITE <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.75em;"></i>
+            </a>
+          ` : `
+            <span class="project-hover-badge">VIEW PROJECT ↗</span>
+          `}
         </div>
       </div>
       <div class="project-info">
         <span class="project-category">${p.category}</span>
         <h3 class="project-title">${p.title}</h3>
         <p class="project-description">${p.description}</p>
+        ${p.liveUrl ? `
+          <div style="margin: 0.6rem 0;">
+            <a href="${p.liveUrl}" target="_blank" rel="noopener noreferrer" class="card-direct-link" style="color: var(--accent-amber); font-size: 0.8rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.28rem 0.65rem; border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 4px; background: rgba(245, 158, 11, 0.08);">
+              <i class="fa-solid fa-globe"></i> ${p.liveUrl.replace('https://', '')} <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.7rem;"></i>
+            </a>
+          </div>
+        ` : ''}
         <div class="project-tags-list">
           ${p.tags.map(t => `<span class="project-tag">${t}</span>`).join('')}
         </div>
@@ -201,7 +214,10 @@ function attachProjectCardEvents(container) {
       }
     });
 
-    card.addEventListener('click', () => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.card-direct-link')) {
+        return; // Open external live link without opening modal
+      }
       const id = card.getAttribute('data-project-id');
       const project = projectsData.find(p => p.id === id);
       if (project) {
@@ -214,6 +230,19 @@ function attachProjectCardEvents(container) {
 /* ==========================================================================
    "SEE MY WORKS" GALLERY DRAWER MODAL
    ========================================================================== */
+function closeGalleryModal(triggerHistoryBack = false) {
+  const backdrop = document.getElementById('works-gallery-modal');
+  if (!backdrop) return;
+  backdrop.classList.remove('is-open');
+  document.body.style.overflow = '';
+  document.querySelectorAll('video').forEach(v => {
+    try { v.pause(); } catch(e) {}
+  });
+  if (triggerHistoryBack && window.history.state && window.history.state.modal === 'works-gallery') {
+    window.history.back();
+  }
+}
+
 function initWorksGalleryModal() {
   const triggers = document.querySelectorAll('.trigger-works-gallery');
   const backdrop = document.getElementById('works-gallery-modal');
@@ -227,20 +256,17 @@ function initWorksGalleryModal() {
       renderGalleryWorks('all');
       backdrop.classList.add('is-open');
       document.body.style.overflow = 'hidden';
+      window.history.pushState({ modal: 'works-gallery' }, '');
     });
   });
 
   if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
-      backdrop.classList.remove('is-open');
-      document.body.style.overflow = '';
-    });
+    closeBtn.addEventListener('click', () => closeGalleryModal(true));
   }
 
   backdrop.addEventListener('click', (e) => {
     if (e.target === backdrop) {
-      backdrop.classList.remove('is-open');
-      document.body.style.overflow = '';
+      closeGalleryModal(true);
     }
   });
 }
@@ -258,6 +284,26 @@ function initFilterTabs() {
       renderGalleryWorks(cat);
     });
   });
+}
+
+/* ==========================================================================
+   VIDEO CLEANUP HELPER (GUARANTEES NO AUDIO IN BACKGROUND)
+   ========================================================================== */
+function stopAndDestroyVideo(v) {
+  if (!v) return;
+  try {
+    v.pause();
+    v.muted = true;
+    v.volume = 0;
+    v.currentTime = 0;
+    v.removeAttribute('src');
+    const sources = v.querySelectorAll('source');
+    sources.forEach(s => {
+      s.removeAttribute('src');
+      s.src = '';
+    });
+    v.load();
+  } catch (e) {}
 }
 
 /* ==========================================================================
@@ -292,6 +338,16 @@ function openProjectModal(project) {
       <div class="modal-header-block" style="margin-bottom: 1.5rem;">
         <span class="modal-category" style="color:var(--accent-amber); font-weight:600; font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase;">${project.category} • ${project.year || '2026'}</span>
         <h2 class="modal-title" style="font-size: clamp(1.5rem, 3vw, 2.2rem); margin: 0.4rem 0 0.75rem 0; color: var(--text-primary); font-weight: 700;">${project.title}</h2>
+        ${project.liveUrl ? `
+          <div style="margin-top: 1rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+            <a href="${project.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn-primary-amber" style="text-decoration:none; display:inline-flex; align-items:center; gap:0.5rem; padding: 0.75rem 1.6rem; border-radius: 6px; font-weight:700; font-size: 0.9rem;">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> VISIT LIVE WEBSITE
+            </a>
+            <a href="${project.liveUrl}" target="_blank" rel="noopener noreferrer" style="color: var(--accent-amber); font-size: 0.88rem; text-decoration: underline; word-break: break-all;">
+              ${project.liveUrl}
+            </a>
+          </div>
+        ` : ''}
       </div>
 
       <div class="modal-body-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
@@ -332,6 +388,9 @@ function openProjectModal(project) {
   backdrop.classList.add('is-open');
   document.body.style.overflow = 'hidden';
 
+  // Push history state so Android/iOS back button or gesture closes the modal cleanly
+  window.history.pushState({ modal: 'project-detail' }, '');
+
   const modalVideo = container.querySelector('video.modal-video');
   if (modalVideo) {
     modalVideo.load();
@@ -348,29 +407,79 @@ function openProjectModal(project) {
   const backBtn = document.getElementById('modal-back-btn');
   const closeBtn = document.getElementById('modal-close');
 
-  if (backBtn) backBtn.addEventListener('click', closeModal);
-  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (backBtn) backBtn.addEventListener('click', () => closeModal(true));
+  if (closeBtn) closeBtn.addEventListener('click', () => closeModal(true));
 
   backdrop.onclick = (e) => {
-    if (e.target === backdrop) closeModal();
+    if (e.target === backdrop) closeModal(true);
   };
 
   window.onkeydown = (e) => {
-    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Escape') closeModal(true);
   };
 }
 
-function closeModal() {
+function closeModal(triggerHistoryBack = false) {
   const backdrop = document.getElementById('project-modal');
+  if (!backdrop) return;
   backdrop.classList.remove('is-open');
-  document.body.style.overflow = '';
-  const video = backdrop.querySelector('video');
-  if (video) {
-    video.pause();
-    video.removeAttribute('src');
-    video.load();
+
+  // Immediately kill and unload all video and audio elements inside modal
+  const videos = backdrop.querySelectorAll('video');
+  videos.forEach(v => stopAndDestroyVideo(v));
+
+  // Clear modal DOM so no hidden media node can keep running in background
+  const container = backdrop.querySelector('.modal-content-container');
+  if (container) {
+    container.innerHTML = '';
+  }
+
+  // Safety: pause any other video on the page
+  document.querySelectorAll('video').forEach(v => {
+    try { v.pause(); } catch (e) {}
+  });
+
+  const galleryModal = document.getElementById('works-gallery-modal');
+  if (!galleryModal || !galleryModal.classList.contains('is-open')) {
+    document.body.style.overflow = '';
+  }
+
+  if (triggerHistoryBack && window.history.state && window.history.state.modal === 'project-detail') {
+    window.history.back();
   }
 }
+
+/* ==========================================================================
+   GLOBAL BACK NAVIGATION & AUDIO SAFETY LISTENERS
+   ========================================================================== */
+window.addEventListener('popstate', () => {
+  const projectModal = document.getElementById('project-modal');
+  if (projectModal && projectModal.classList.contains('is-open')) {
+    closeModal(false);
+    return;
+  }
+
+  const galleryModal = document.getElementById('works-gallery-modal');
+  if (galleryModal && galleryModal.classList.contains('is-open')) {
+    closeGalleryModal(false);
+    return;
+  }
+});
+
+// Immediately stop audio if browser tab is switched or minimized
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    document.querySelectorAll('video').forEach(v => {
+      try { v.pause(); } catch (e) {}
+    });
+  }
+});
+
+window.addEventListener('pagehide', () => {
+  document.querySelectorAll('video').forEach(v => {
+    try { v.pause(); } catch (e) {}
+  });
+});
 
 /* ==========================================================================
    LAZY VIDEO VIEWPORT OBSERVER
