@@ -14,6 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactModal();
   initCustomCursor();
   
+  // Ensure direct contact cards and social links handle navigation cleanly without interference
+  document.querySelectorAll('a.contact-info-card').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+  });
+  
   // Lazy pre-render gallery in background idle time
   if ('requestIdleCallback' in window) {
     requestIdleCallback(() => renderGalleryWorks('all'));
